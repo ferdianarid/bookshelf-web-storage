@@ -58,6 +58,8 @@ const completeRead = bookId => {
     }).then((result) => {
         if (result.isConfirmed) {
             bookTarget.isComplete = true
+            document.dispatchEvent(new Event(RENDER_EVENT))
+            saveBookToLocalstorage()
             Swal.fire({
                 title: "Successfully Moved",
                 text: "Your book has been moved to completed",
@@ -69,9 +71,6 @@ const completeRead = bookId => {
             })
         }
     })
-
-    document.dispatchEvent(new Event(RENDER_EVENT))
-    saveBookToLocalstorage()
 }
 
 const undoReadBookFromComplete = bookId => {
@@ -89,6 +88,8 @@ const undoReadBookFromComplete = bookId => {
     }).then((result) => {
         if (result.isConfirmed) {
             bookTarget.isComplete = false
+            document.dispatchEvent(new Event(RENDER_EVENT))
+            saveBookToLocalstorage()
             Swal.fire({
                 title: "Successfully Moved",
                 text: "Your book has been moved to unread",
@@ -100,9 +101,6 @@ const undoReadBookFromComplete = bookId => {
             })
         }
     })
-
-    document.dispatchEvent(new Event(RENDER_EVENT))
-    saveBookToLocalstorage()
 }
 
 const deleteAction = bookId => {
