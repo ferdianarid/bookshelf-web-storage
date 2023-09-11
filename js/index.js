@@ -81,11 +81,15 @@ const deleteAction = bookId => {
             books.splice(bookTarget, 1)
             document.dispatchEvent(new Event(RENDER_EVENT))
             saveBookToLocalstorage()
-            Swal.fire(
-                "Successfully Deleted",
-                "Your book has been deleted",
-                "success"
-            )
+            Swal.fire({
+                title: "Successfully Deleted",
+                text: "Your book has been deleted",
+                icon: "success"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload()
+                }
+            })
         }
     })
 }
@@ -115,7 +119,7 @@ const createBook = bookObject => {
     const { id, title, author, year, isComplete } = bookObject
 
     const bookTitle = document.createElement("h1")
-    bookTitle.classList.add("font-bold", "text-md", "text-gray-700")
+    bookTitle.classList.add("font-bold", "text-md", "text-gray-700", "title-book")
     bookTitle.innerText = title
 
     const authorName = document.createElement("h2")
@@ -126,17 +130,10 @@ const createBook = bookObject => {
     yearPublised.classList.add("font-semibold", "text-sm", "text-gray-500")
     yearPublised.innerText = `Year published: ${year}`
 
-    const dataContainer = document.createElement("div")
-    dataContainer.append(bookTitle, authorName, yearPublised)
-
     const container = document.createElement("div")
-    container.classList.add("w-full", "p-2", "rounded-lg", "border", "border-gray-300", "flex", "justify-between", "items-start", "gap-4", "border-gray-300", "flex-col", "md:flex-row", "md:gap-2")
+    container.classList.add("w-full", "book_item", "p-2", "rounded-lg", "border", "border-gray-300", "flex", "justify-between", "items-start", "gap-4", "border-gray-300", "flex-col", "md:flex-row", "md:gap-2")
 
-    const dataWrapper = document.createElement("div")
-    dataWrapper.classList.add("grid", "gap-2", "px-2")
-
-    dataWrapper.append(dataContainer)
-    container.append(dataWrapper)
+    container.append(bookTitle, authorName, yearPublised)
 
     container.setAttribute("id", `book-${id}`)
 
@@ -180,7 +177,6 @@ const createBook = bookObject => {
         })
 
         buttonWrapper.append(completeButton, deleteButtonAction)
-
         container.append(buttonWrapper)
     }
 
@@ -191,9 +187,6 @@ const bookTitle = document.getElementById("title")
 const authorName = document.getElementById("author")
 const yearPublised = document.getElementById("year")
 const isCompletedCheck = document.getElementById("completed")
-
-const formQuery = document.getElementById("form-query")
-const query = document.getElementById("query").value
 
 const addBook = () => {
     const { value: title } = bookTitle
@@ -222,12 +215,16 @@ const resetForm = () => {
 
 const searchPanel = document.getElementById("search")
 const openSearch = document.getElementById("openSearch")
+const unreadCount = document.getElementById("unread-count")
+const readCount = document.getElementById("read-count")
+
 openSearch.addEventListener("click", () => {
     searchPanel.classList.toggle("hidden")
 })
 
 document.addEventListener("DOMContentLoaded", () => {
     const formBook = document.getElementById("form-book")
+
     formBook.addEventListener("submit", (event) => {
         event.preventDefault()
         addBook()
@@ -236,12 +233,36 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Successfully Add Book",
             text: "Huurray, you successfully add book to bookshelf",
             confirmButtonText: "Okay",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.reload()
+            }
         })
         resetForm()
     })
     if (isStorageExist()) {
         loadDataFromStorage()
     }
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+    const bookList = document.querySelectorAll(".book_item > h1")
+    const formSearch = document.getElementById("form-search")
+
+    formSearch.addEventListener("submit", (event) => {
+        event.preventDefault()
+        const queryTitle = document.getElementById("query").value.toLowerCase()
+        for (book of bookList) {
+            if (book.innerText.toLowerCase().includes(queryTitle)) {
+                book.parentElement.style.display = "flex"
+            } else {
+                book.parentElement.style.display = "none"
+            }
+        }
+        setTimeout(() => {
+            document.getElementById("query").value = null
+        }, 50)
+    })
 })
 
 document.addEventListener(SAVED_EVENT, () => {
@@ -254,6 +275,12 @@ document.addEventListener(RENDER_EVENT, () => {
 
     unreadBook.innerHTML = ""
     listCompleted.innerHTML = ""
+
+    const unreadlist = books.filter(({ isComplete }) => !isComplete).length
+    const readlist = books.filter(({ isComplete }) => isComplete).length
+
+    unreadCount.innerText = `Count : ${unreadlist} books`
+    readCount.innerText = `Count : ${readlist} books`
 
     for (const book of books) {
         const bookElement = createBook(book)

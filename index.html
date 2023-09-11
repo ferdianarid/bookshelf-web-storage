@@ -29,19 +29,22 @@
                         <div>
                             <label for="title" class="block text-sm font-semibold leading-6 text-gray-900">Book Title <span class="text-red-600">*</span></label>
                             <div class="mt-2.5">
-                                <input type="text" name="title" id="title" autocomplete="title" placeholder="Enter Book Title" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <input type="text" name="title" id="title" autocomplete="title" placeholder="Enter Book Title" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    required>
                             </div>
                         </div>
                         <div>
                             <label for="author" class="block text-sm font-semibold leading-6 text-gray-900">Author Name <span class="text-red-600">*</span></label>
                             <div class="mt-2.5">
-                                <input type="text" name="author" id="author" autocomplete="author" placeholder="Enter Author Name" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <input type="text" name="author" id="author" autocomplete="author" placeholder="Enter Author Name" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    required>
                             </div>
                         </div>
                         <div class="sm:col-span-2">
                             <label for="year" class="block text-sm font-semibold leading-6 text-gray-900">Year Published <span class="text-red-600">*</span></label>
                             <div class="mt-2.5">
-                                <input type="number" name="year" id="year" autocomplete="year" placeholder="Enter Year Published" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <input type="number" name="year" id="year" autocomplete="year" placeholder="Enter Year Published" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    required>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
@@ -53,28 +56,42 @@
                         <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-3 transition-all duration-200 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Enter the Book</button>
                     </div>
                 </form>
-                <p class="text-sm leading-normal text-gray-600 text-center mt-4">Ferdian Ahmad Rozikin</p>
+            </div>
+            <div class="w-full md:mt-5 mt-0 py-8 px-8 md:px-10 text-left">
+                <h1 class="font-bold text-lg text-gray-800">Feature :</h1>
+                <li class="text-sm leading-normal text-gray-600 mt-2 list-inside">Create Book</li>
+                <li class="list-inside text-sm leading-normal text-gray-600"><span class="font-bold">Complete, Undo</span> and <span class="font-bold list-inside">Delete</span> Book Action</li>
+                <li class="list-inside text-sm leading-normal text-gray-600"><span class="font-bold">Live Count</span> Unread and Complete Read ( Example: count 15 books)</li>
+                <li class="list-inside text-sm leading-normal text-gray-600">Custom Dialog <span class="font-bold">Success, and Confirm with SweetAlert</span></li>
+                <li class="list-inside text-sm leading-normal text-gray-600"><span class="font-bold">Toggle</span> show and hide searchbar</li>
+                <li class="list-inside text-sm leading-normal text-gray-600">Filter search by <span class="font-bold">book title</span></li>
+
+                <div class="mt-5">
+                    <p class="text-sm leading-normal text-gray-600 mt-4">Created by <span class="font-bold">Ferdian Ahmad Rozikin</span></p>
+                </div>
             </div>
         </div>
         <div class="w-full isolate p-8 md:col-span-6 border-t md:border-l border-slate-200">
             <button id="openSearch" class="font-bold py-2 px-4 rounded-md border border-slate-200 text-sm text-gray-700">Toggle Search</button>
             <div id="search" class="hidden pb-5 border-b border-slate-200">
-                <form id="form-query" class="mt-2.5 grid gap-5 w-full">
+                <form id="form-search" class="mt-2.5 grid gap-5 w-full">
                     <input type="search" name="query" id="query" autocomplete="query" placeholder="Enter keyword" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-3 transition-all duration-200 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Search Book</button>
+                    <button type="submit" id="button-search" class="block w-full rounded-md bg-indigo-600 px-3.5 py-3 transition-all duration-200 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Search Book</button>
                 </form>
             </div>
             <div class="mt-6 grid gap-5">
                 <div class="w-full pb-2 border border-slate-300 rounded-lg grid gap-4">
-                    <div class="w-full py-2 px-4 bg-slate-200 rounded-t-lg">
+                    <div class="w-full py-2 px-4 bg-slate-200 rounded-t-lg flex items-center justify-between">
                         <h1 class="font-bold text-lg text-gray-700">Unread Book</h1>
+                        <h1 id="unread-count" class="font-medium text-sm text-gray-700"></h1>
                     </div>
                     <div id="books" class="px-2 grid gap-2">
                     </div>
                 </div>
                 <div class="w-full pb-2 border border-slate-300 rounded-lg grid gap-4">
-                    <div class="w-full py-2 px-4 bg-slate-200 rounded-t-lg">
+                    <div class="w-full py-2 px-4 bg-slate-200 rounded-t-lg flex items-center justify-between">
                         <h1 class="font-bold text-lg text-gray-700">Book already read</h1>
+                        <h1 id="read-count" class="font-medium text-sm text-gray-700"></h1>
                     </div>
                     <div id="complete-read" class="px-2 grid gap-2"></div>
                 </div>
