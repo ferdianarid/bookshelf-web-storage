@@ -47,7 +47,28 @@ const completeRead = bookId => {
 
     if (bookTarget == null) return
 
-    bookTarget.isComplete = true
+    Swal.fire({
+        title: "Are you sure ?",
+        text: "Are you sure want to move to complete read ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            bookTarget.isComplete = true
+            Swal.fire({
+                title: "Successfully Moved",
+                text: "Your book has been moved to completed",
+                icon: "success"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload()
+                }
+            })
+        }
+    })
 
     document.dispatchEvent(new Event(RENDER_EVENT))
     saveBookToLocalstorage()
@@ -57,7 +78,28 @@ const undoReadBookFromComplete = bookId => {
     const bookTarget = findBook(bookId)
     if (bookTarget == null) return
 
-    bookTarget.isComplete = false
+    Swal.fire({
+        title: "Are you sure ?",
+        text: "Are you sure want to move to unread ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, move it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            bookTarget.isComplete = false
+            Swal.fire({
+                title: "Successfully Moved",
+                text: "Your book has been moved to unread",
+                icon: "success"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload()
+                }
+            })
+        }
+    })
 
     document.dispatchEvent(new Event(RENDER_EVENT))
     saveBookToLocalstorage()
@@ -281,6 +323,14 @@ document.addEventListener(RENDER_EVENT, () => {
 
     unreadCount.innerText = `Count : ${unreadlist} books`
     readCount.innerText = `Count : ${readlist} books`
+
+    if (unreadlist === 0) {
+        unreadBook.innerText = "Book is empty"
+    }
+
+    if (readlist === 0) {
+        listCompleted.innerText = "Book is empty"
+    }
 
     for (const book of books) {
         const bookElement = createBook(book)
