@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formSearch.addEventListener("submit", (event) => {
         event.preventDefault()
         const queryTitle = document.getElementById("query").value.toLowerCase()
-        for (book of bookList) {
+        for (let book of bookList) {
             if (book.innerText.toLowerCase().includes(queryTitle)) {
                 book.parentElement.style.display = "flex"
             } else {
