@@ -1,8 +1,10 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <title>Bookshelf App | Manage your book</title>
+    <meta name="description" content="Make a reading schedule and arrange your books neatly on the bookshelf">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylesheets/index.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,58 +14,71 @@
 </head>
 
 <body>
-    <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-        <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]" aria-hidden="true">
-            <div class="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+    <div class="w-full grid grid-cols-1 md:grid-cols-12">
+        <div class="w-full md:col-span-6">
+            <div class="w-full isolate md:h-screen bg-white p-8 md:px-10 md:py-14">
+                <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]" aria-hidden="true">
+                    <div class="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+                </div>
+                <div class="w-full text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Bookshelf</h2>
+                    <p class="mt-2 text-sm leading-normal text-gray-600">Make a reading schedule and arrange your books neatly on the bookshelf</p>
+                </div>
+                <form id="form-book" class="w-full mt-8 md:mt-16">
+                    <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                        <div>
+                            <label for="title" class="block text-sm font-semibold leading-6 text-gray-900">Book Title <span class="text-red-600">*</span></label>
+                            <div class="mt-2.5">
+                                <input type="text" name="title" id="title" autocomplete="title" placeholder="Enter Book Title" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="author" class="block text-sm font-semibold leading-6 text-gray-900">Author Name <span class="text-red-600">*</span></label>
+                            <div class="mt-2.5">
+                                <input type="text" name="author" id="author" autocomplete="author" placeholder="Enter Author Name" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="year" class="block text-sm font-semibold leading-6 text-gray-900">Year Published <span class="text-red-600">*</span></label>
+                            <div class="mt-2.5">
+                                <input type="number" name="year" id="year" autocomplete="year" placeholder="Enter Year Published" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <input id="completed" name="completed" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <h3 class="block text-sm font-semibold leading-6 text-gray-900">I Already read this book</h3>
+                        </div>
+                    </div>
+                    <div class="mt-10">
+                        <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-3 transition-all duration-200 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Enter the Book</button>
+                    </div>
+                </form>
+                <p class="text-sm leading-normal text-gray-600 text-center mt-4">Ferdian Ahmad Rozikin</p>
+            </div>
         </div>
-        <div class="mx-auto max-w-2xl text-center">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Modern Bookshelf</h2>
-            <p class="mt-2 text-sm leading-8 text-gray-600">Make a reading schedule and arrange your books neatly on the bookshelf</p>
-        </div>
-        <form id="form-book" class="mx-auto mt-16 max-w-xl sm:mt-20">
-            <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                <div>
-                    <label for="title" class="block text-sm font-semibold leading-6 text-gray-900">Book Title <span class="text-red-600">*</span></label>
-                    <div class="mt-2.5">
-                        <input type="text" name="title" id="title" autocomplete="title" placeholder="Enter Book Title" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <div class="w-full isolate p-8 md:col-span-6 border-t md:border-l border-slate-200">
+            <button id="openSearch" class="font-bold py-2 px-4 rounded-md border border-slate-200 text-sm text-gray-700">Toggle Search</button>
+            <div id="search" class="hidden pb-5 border-b border-slate-200">
+                <form id="form-query" class="mt-2.5 grid gap-5 w-full">
+                    <input type="search" name="query" id="query" autocomplete="query" placeholder="Enter keyword" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-3 transition-all duration-200 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Search Book</button>
+                </form>
+            </div>
+            <div class="mt-6 grid gap-5">
+                <div class="w-full pb-2 border border-slate-300 rounded-lg grid gap-4">
+                    <div class="w-full py-2 px-4 bg-slate-200 rounded-t-lg">
+                        <h1 class="font-bold text-lg text-gray-700">Unread Book</h1>
+                    </div>
+                    <div id="books" class="px-2 grid gap-2">
                     </div>
                 </div>
-                <div>
-                    <label for="author" class="block text-sm font-semibold leading-6 text-gray-900">Author Name <span class="text-red-600">*</span></label>
-                    <div class="mt-2.5">
-                        <input type="text" name="author" id="author" autocomplete="author" placeholder="Enter Author Name" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <div class="w-full pb-2 border border-slate-300 rounded-lg grid gap-4">
+                    <div class="w-full py-2 px-4 bg-slate-200 rounded-t-lg">
+                        <h1 class="font-bold text-lg text-gray-700">Book already read</h1>
                     </div>
-                </div>
-                <div class="sm:col-span-2">
-                    <label for="year" class="block text-sm font-semibold leading-6 text-gray-900">Year Published <span class="text-red-600">*</span></label>
-                    <div class="mt-2.5">
-                        <input type="number" name="year" id="year" autocomplete="year" placeholder="Enter Year Published" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    </div>
-                </div>
-                <div class="flex items-center gap-3">
-                    <input id="completed" name="completed" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <h3 class="block text-sm font-semibold leading-6 text-gray-900">I Already read this book</h3>
+                    <div id="complete-read" class="px-2 grid gap-2"></div>
                 </div>
             </div>
-            <div class="mt-10">
-                <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-3 transition-all duration-200 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Enter the Book</button>
-            </div>
-        </form>
-    </div>
-    <div class="w-full mb-10 max-w-2xl mx-auto">
-        <div class="mt-2.5 grid gap-5 w-full grid-cols-8">
-            <input type="search" name="search" id="search" autocomplete="search" placeholder="Enter keyword" class="block col-span-6 w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-3 transition-all duration-200 col-span-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Search Book</button>
-        </div>
-    </div>
-    <div class="w-full max-w-2xl mx-auto">
-        <div class="grid gap-4">
-            <h1 class="font-bold text-xl text-gray-700">Unread Book</h1>
-            <div id="books"></div>
-        </div>
-        <div class="grid gap-4">
-            <h1 class="font-bold text-xl text-gray-700">Book already read</h1>
-            <div id="complete-read"></div>
         </div>
     </div>
     <script type="text/javascript" src="./js/index.js"></script>

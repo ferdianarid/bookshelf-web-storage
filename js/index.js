@@ -48,7 +48,9 @@ const completeRead = bookId => {
     if (bookTarget == null) return
 
     bookTarget.isComplete = true
+
     document.dispatchEvent(new Event(RENDER_EVENT))
+    saveBookToLocalstorage()
 }
 
 const undoReadBookFromComplete = bookId => {
@@ -56,7 +58,9 @@ const undoReadBookFromComplete = bookId => {
     if (bookTarget == null) return
 
     bookTarget.isComplete = false
+
     document.dispatchEvent(new Event(RENDER_EVENT))
+    saveBookToLocalstorage()
 }
 
 const deleteAction = bookId => {
@@ -64,8 +68,26 @@ const deleteAction = bookId => {
 
     if (bookTarget === -1) return
 
-    books.splice(bookTarget, 1)
-    document.dispatchEvent(new Event(RENDER_EVENT))
+    Swal.fire({
+        title: "Are you sure want to delete ?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            books.splice(bookTarget, 1)
+            document.dispatchEvent(new Event(RENDER_EVENT))
+            saveBookToLocalstorage()
+            Swal.fire(
+                "Successfully Deleted",
+                "Your book has been deleted",
+                "success"
+            )
+        }
+    })
 }
 
 const saveBookToLocalstorage = () => {
@@ -93,55 +115,73 @@ const createBook = bookObject => {
     const { id, title, author, year, isComplete } = bookObject
 
     const bookTitle = document.createElement("h1")
+    bookTitle.classList.add("font-bold", "text-md", "text-gray-700")
     bookTitle.innerText = title
 
     const authorName = document.createElement("h2")
-    authorName.innerText = author
+    authorName.classList.add("font-semibold", "text-sm", "text-gray-500")
+    authorName.innerText = `Author : ${author}`
 
     const yearPublised = document.createElement("p")
-    yearPublised.innerText = year
+    yearPublised.classList.add("font-semibold", "text-sm", "text-gray-500")
+    yearPublised.innerText = `Year published: ${year}`
 
     const dataContainer = document.createElement("div")
     dataContainer.append(bookTitle, authorName, yearPublised)
 
     const container = document.createElement("div")
-    container.classList.add("w-fit", "p-4", "rounded-lg", "border", "border-gray-300")
+    container.classList.add("w-full", "p-2", "rounded-lg", "border", "border-gray-300", "flex", "justify-between", "items-start", "gap-4", "border-gray-300", "flex-col", "md:flex-row", "md:gap-2")
 
-    container.append(dataContainer)
+    const dataWrapper = document.createElement("div")
+    dataWrapper.classList.add("grid", "gap-2", "px-2")
+
+    dataWrapper.append(dataContainer)
+    container.append(dataWrapper)
+
     container.setAttribute("id", `book-${id}`)
 
     if (isComplete) {
+        const buttonWrapper = document.createElement("div")
+        buttonWrapper.classList.add("flex", "items-center", "gap-2", "min-w-[250px]", "md:justify-end", "justify-start")
+
         const undoReadAction = document.createElement("button")
         undoReadAction.innerText = "Undo Read"
-        undoReadAction.classList.add("py-2", "px-4", "bg-red-600", "text-white", "font-semibold", "rounded-lg")
+        undoReadAction.classList.add("py-2", "px-3", "text-sm", "bg-red-600", "text-white", "font-semibold", "rounded-md")
         undoReadAction.addEventListener("click", () => {
             undoReadBookFromComplete(id)
         })
 
         const deleteButtonAction = document.createElement("button")
-        deleteButtonAction.classList.add("py-2", "px-4", "bg-blue-600", "text-white", "font-semibold", "rounded-lg")
-        deleteButtonAction.innerText = "Delete Book"
+        deleteButtonAction.classList.add("py-2", "px-3", "text-sm", "bg-red-600", "text-white", "font-semibold", "rounded-md")
+        deleteButtonAction.innerText = "Delete"
         deleteButtonAction.addEventListener("click", () => {
             deleteAction(id)
         })
 
-        container.append(undoReadAction, deleteButtonAction)
+        buttonWrapper.append(undoReadAction, deleteButtonAction)
+
+        container.append(buttonWrapper)
     } else {
+        const buttonWrapper = document.createElement("div")
+        buttonWrapper.classList.add("flex", "items-center", "gap-2", "min-w-[250px]", "md:justify-end", "justify-start")
+
         const completeButton = document.createElement("button")
         completeButton.innerText = "Complete Read"
-        completeButton.classList.add("py-2", "px-4", "bg-blue-600", "text-white", "font-semibold", "rounded-lg")
+        completeButton.classList.add("py-2", "px-3", "text-sm", "bg-green-600", "text-white", "font-semibold", "rounded-md")
         completeButton.addEventListener("click", () => {
             completeRead(id)
         })
 
         const deleteButtonAction = document.createElement("button")
-        deleteButtonAction.classList.add("py-2", "px-4", "bg-blue-600", "text-white", "font-semibold", "rounded-lg")
-        deleteButtonAction.innerText = "Delete Book"
+        deleteButtonAction.classList.add("py-2", "px-4", "text-sm", "bg-red-600", "text-white", "font-semibold", "rounded-md")
+        deleteButtonAction.innerText = "Delete"
         deleteButtonAction.addEventListener("click", () => {
             deleteAction(id)
         })
 
-        container.append(completeButton, deleteButtonAction)
+        buttonWrapper.append(completeButton, deleteButtonAction)
+
+        container.append(buttonWrapper)
     }
 
     return container
@@ -151,6 +191,9 @@ const bookTitle = document.getElementById("title")
 const authorName = document.getElementById("author")
 const yearPublised = document.getElementById("year")
 const isCompletedCheck = document.getElementById("completed")
+
+const formQuery = document.getElementById("form-query")
+const query = document.getElementById("query").value
 
 const addBook = () => {
     const { value: title } = bookTitle
@@ -167,6 +210,7 @@ const addBook = () => {
     console.log("Books : ", books)
 
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveBookToLocalstorage()
 }
 
 const resetForm = () => {
@@ -175,6 +219,12 @@ const resetForm = () => {
     yearPublised.value = ""
     isCompletedCheck.checked = null
 }
+
+const searchPanel = document.getElementById("search")
+const openSearch = document.getElementById("openSearch")
+openSearch.addEventListener("click", () => {
+    searchPanel.classList.toggle("hidden")
+})
 
 document.addEventListener("DOMContentLoaded", () => {
     const formBook = document.getElementById("form-book")
@@ -189,11 +239,13 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         resetForm()
     })
+    if (isStorageExist()) {
+        loadDataFromStorage()
+    }
 })
 
 document.addEventListener(SAVED_EVENT, () => {
-    console.log("")
-    alert("Book successfully saved")
+    console.log("Book successfully saved")
 })
 
 document.addEventListener(RENDER_EVENT, () => {
